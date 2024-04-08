@@ -1,13 +1,20 @@
 lints.workspace = true
 
 [package]
+edition.workspace = true
+license.workspace = true
 name = "file-mover"
-version = "0.1.0"
-edition = "2021"
+rust-version.workspace = true
+version.workspace = true
 
 [dependencies]
 anyhow = "1"
+async_zip = { git = "https://github.com/Majored/rs-async-zip.git", features = [
+    "deflate",
+    "tokio"
+] }
 clap = { version = "=4.5.3", features = ["derive"] }
+console-subscriber = "0.2"
 futures = "0.3"
 tokio = { version = "1", features = ["fs", "rt-multi-thread", "tracing"] }
 tokio-stream = { version = "0.1", features = ["fs"] }
@@ -16,7 +23,7 @@ tracing-subscriber = { version = "0.3", default-features = false, features = [
     "ansi",
     "env-filter",
     "fmt",
-    "std",
+    "std"
 ] }
 
 [workspace]

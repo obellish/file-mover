@@ -5,14 +5,12 @@ use tracing::Subscriber;
 use tracing_subscriber::{fmt, prelude::*, EnvFilter, Layer};
 
 pub async fn setup_tracing(args: &crate::Args) -> Result<()> {
-	let log_filter_layer =
-		EnvFilter::try_from_default_env().or_else(|_| EnvFilter::try_new("debug"))?;
+	let log_filter_layer = EnvFilter::try_from_default_env()
+		.or_else(|_| EnvFilter::try_new("trace,tokio=debug,runtime=debug"))?;
 
 	let log_fmt_layer = setup_console();
 
-	let registry = tracing_subscriber::registry()
-		.with(log_filter_layer)
-		.with(log_fmt_layer);
+	let registry = tracing_subscriber::registry().with(log_fmt_layer.with_filter(log_filter_layer));
 
 	if let Some(log_file) = args.log_file.as_deref() {
 		let log_fs_layer = setup_file(log_file).await?;

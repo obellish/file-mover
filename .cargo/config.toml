@@ -1,11 +1,11 @@
 [target.'cfg(not(target_arch = "wasm32"))']
-rustflags = ["-C", "target-cpu=native"]
+rustflags = ["-C", "target-cpu=native", "--cfg", "tokio_unstable"]
 
 [target.x86_64-pc-windows-msvc]
-rustflags = ["-C", "target-feature=+crt-static"]
+rustflags = ["-C", "target-feature=+crt-static", "--cfg", "tokio_unstable"]
 
 [target.i686-pc-windows-msvc]
-rustflags = ["-C", "target-feature=+crt-static"]
+rustflags = ["-C", "target-feature=+crt-static", "--cfg", "tokio_unstable"]
 
 [doc.extern-map.registries]
 crates-io = "https://docs.rs/"
