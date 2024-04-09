@@ -11,7 +11,13 @@ version.workspace = true
 anyhow = "1"
 clap = { version = "=4.5.3", features = ["derive"] }
 futures = "0.3"
-tokio = { version = "1", features = ["fs", "rt-multi-thread", "tracing"] }
+tokio = { version = "1", features = [
+    "fs",
+    "macros",
+    "rt-multi-thread",
+    "signal",
+    "tracing"
+] }
 tokio-stream = { version = "0.1", features = ["fs"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", default-features = false, features = [
