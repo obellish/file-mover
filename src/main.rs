@@ -2,7 +2,7 @@ use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
 
 use anyhow::Result;
 use clap::Parser;
-use file_mover::{copy_dir_all, setup_tracing, zip_files, Args};
+use file_mover::{copy_dir_all, setup_tracing, Args};
 use tokio::runtime::Builder;
 
 static THREAD_ID: AtomicUsize = AtomicUsize::new(1);

@@ -1,13 +1,12 @@
 mod fs;
 mod tracing_setup;
 mod util;
-mod zip;
 
 use std::path::PathBuf;
 
 use clap::Parser;
 
-pub use self::{fs::*, tracing_setup::setup_tracing, util::*, zip::*};
+pub use self::{fs::*, tracing_setup::setup_tracing, util::*};
 
 #[derive(Debug, Clone, Parser)]
 #[command(version, about, long_about = None)]

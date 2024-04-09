@@ -9,21 +9,11 @@ version.workspace = true
 
 [dependencies]
 anyhow = "1"
-async_zip = { git = "https://github.com/Majored/rs-async-zip.git", features = [
-    "lzma",
-    "tokio"
-] }
 clap = { version = "=4.5.3", features = ["derive"] }
 console-subscriber = "0.2"
 futures = "0.3"
-tokio = { version = "1", features = [
-    "fs",
-    "rt-multi-thread",
-    "signal",
-    "tracing"
-] }
+tokio = { version = "1", features = ["fs", "rt-multi-thread", "tracing"] }
 tokio-stream = { version = "0.1", features = ["fs"] }
-tokio-util = { version = "0.7", features = ["compat"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", default-features = false, features = [
     "ansi",
