@@ -10,7 +10,6 @@ version.workspace = true
 [dependencies]
 anyhow = "1"
 clap = { version = "=4.5.3", features = ["derive"] }
-console-subscriber = "0.2"
 futures = "0.3"
 tokio = { version = "1", features = ["fs", "rt-multi-thread", "tracing"] }
 tokio-stream = { version = "0.1", features = ["fs"] }
@@ -36,7 +35,6 @@ cast_sign_loss = "allow"
 disallowed_methods = "deny"
 float_cmp = "allow"
 fn_params_excessive_bools = "allow"
-impl_trait_in_params = "warn"
 missing_errors_doc = "allow"
 missing_panics_doc = "allow"
 module_name_repetitions = "allow"

@@ -6,7 +6,7 @@ use tracing_subscriber::{fmt, prelude::*, EnvFilter, Layer};
 
 pub async fn setup_tracing(args: &crate::Args) -> Result<()> {
 	let log_filter_layer = EnvFilter::try_from_default_env()
-		.or_else(|_| EnvFilter::try_new("trace,tokio=debug,runtime=debug"))?;
+		.or_else(|_| EnvFilter::try_new("trace,tokio=error,runtime=error"))?;
 
 	let log_fmt_layer = setup_console();
 
