@@ -5,10 +5,13 @@ use std::{
 	path::PathBuf,
 };
 
+use tokio::task::JoinError;
+
 #[derive(Debug)]
 pub enum CopyDirError {
 	Io(IoError),
 	MoveFile(MoveFileError),
+	Join(JoinError),
 }
 
 impl Display for CopyDirError {
@@ -19,6 +22,7 @@ impl Display for CopyDirError {
 				Display::fmt(e, f)
 			}
 			Self::MoveFile(e) => Display::fmt(e, f),
+			Self::Join(e) => Display::fmt(e, f),
 		}
 	}
 }
@@ -35,11 +39,18 @@ impl From<MoveFileError> for CopyDirError {
 	}
 }
 
+impl From<JoinError> for CopyDirError {
+	fn from(value: JoinError) -> Self {
+		Self::Join(value)
+	}
+}
+
 impl StdError for CopyDirError {
 	fn source(&self) -> Option<&(dyn StdError + 'static)> {
 		match self {
 			Self::Io(e) => Some(e),
 			Self::MoveFile(e) => Some(e),
+			Self::Join(e) => Some(e),
 		}
 	}
 }
