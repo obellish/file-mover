@@ -2,7 +2,7 @@ use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
 
 use anyhow::Result;
 use clap::Parser;
-use file_mover::{setup_tracing, zip_files, Args};
+use file_mover::{copy_dir_all, setup_tracing, zip_files, Args};
 use tokio::runtime::Builder;
 
 static THREAD_ID: AtomicUsize = AtomicUsize::new(1);
@@ -27,7 +27,7 @@ fn main() -> Result<()> {
 async fn run(args: Args) -> Result<()> {
 	setup_tracing(&args).await?;
 
-	zip_files(&args.input_folder, args.output_folder).await?;
+	copy_dir_all(&args.input_folder, args.output_folder).await?;
 
 	Ok(())
 }

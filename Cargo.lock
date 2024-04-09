@@ -378,6 +378,7 @@ dependencies = [
  "futures",
  "tokio",
  "tokio-stream",
+ "tokio-util",
  "tracing",
  "tracing-subscriber",
 ]

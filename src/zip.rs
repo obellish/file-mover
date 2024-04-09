@@ -13,6 +13,7 @@ use tokio::{
 	io::AsyncReadExt as _,
 	signal::windows::{ctrl_break, ctrl_c, ctrl_close, ctrl_logoff, ctrl_shutdown},
 };
+use tokio_util::compat::TokioAsyncReadCompatExt;
 use tracing::{event, Level};
 
 use crate::visit;
@@ -75,17 +76,25 @@ where
 
 					let entry = ZipEntryBuilder::new(filename, Compression::Lzma);
 
-					let data = {
-						let mut file = File::open(path).await?;
+					let mut writer = zip_writer.write_entry_stream(entry).await?;
 
-						let mut buffer = Vec::new();
+					let file = File::open(&path).await?;
 
-						file.read_to_end(&mut buffer).await?;
+					futures::io::copy(file.compat(), &mut writer).await?;
 
-						buffer
-					};
+					writer.close().await?;
 
-					zip_writer.write_entry_whole(entry, &data).await?;
+					// let data = {
+					// 	let mut file = File::open(path).await?;
+
+					// 	let mut buffer = Vec::new();
+
+					// 	file.read_to_end(&mut buffer).await?;
+
+					// 	buffer
+					// };
+
+					// zip_writer.write_entry_whole(entry, &data).await?;
 				}
 		}
 	}
