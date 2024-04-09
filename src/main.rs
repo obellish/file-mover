@@ -12,7 +12,7 @@ static THREAD_ID: AtomicUsize = AtomicUsize::new(1);
 fn main() -> Result<()> {
 	let args = Args::try_parse()?;
 
-	Builder::new_multi_thread()
+	Builder::new_current_thread()
 		.enable_all()
 		.thread_name_fn(|| {
 			let id = THREAD_ID.fetch_add(1, SeqCst) + 1;
@@ -42,8 +42,6 @@ async fn run(args: Args) -> Result<()> {
 	futures::future::try_join_all(output)
 		.map_ok(|values| values.into_iter().collect::<Result<(), MoveFileError>>())
 		.await??;
-
-	// copy_dir_all_old(&args.input_folder, args.output_folder).await?;
 
 	Ok(())
 }
