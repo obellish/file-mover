@@ -166,7 +166,6 @@ dependencies = [
  "anyhow",
  "clap",
  "futures",
- "new",
  "paste",
  "tokio",
  "tokio-stream",
@@ -326,14 +325,6 @@ dependencies = [
  "libc",
  "wasi",
  "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "new"
-version = "0.1.0"
-source = "git+https://github.com/starlite-project/new.git?rev=52a0d1816298973b05646c9bdb22f30e3d4b09a4#52a0d1816298973b05646c9bdb22f30e3d4b09a4"
-dependencies = [
- "paste",
 ]
 
 [[package]]

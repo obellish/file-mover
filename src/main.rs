@@ -4,7 +4,6 @@ use anyhow::Result;
 use clap::Parser;
 use file_mover::{copy_dir_all, setup_tracing, Args};
 use futures::{stream::FuturesUnordered, TryStreamExt as _};
-use new::try_new;
 use tokio::{
 	runtime::Builder,
 	signal::windows::{ctrl_break, ctrl_c},
@@ -14,7 +13,7 @@ use tracing::{event, Level};
 static THREAD_ID: AtomicUsize = AtomicUsize::new(1);
 
 fn main() -> Result<()> {
-	let args = try_new!(Args: parse())?;
+	let args = Args::try_parse()?;
 
 	Builder::new_multi_thread()
 		.enable_all()

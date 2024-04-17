@@ -6,7 +6,6 @@ use std::{
 };
 
 use futures::{future::BoxFuture, stream::FuturesUnordered, FutureExt as _, TryStreamExt as _};
-use new::new;
 use tokio::{fs, task::JoinHandle};
 use tokio_stream::wrappers::ReadDirStream;
 use tracing::{event, Level};
@@ -27,8 +26,7 @@ where
 		let dst = dst.as_ref();
 		event!(Level::DEBUG, ?src, ?dst, "copying folder");
 		fs::create_dir_all(&dst).await?;
-		let raw_dir = fs::read_dir(src).await?;
-		let mut stream = new!(ReadDirStream(raw_dir));
+		let mut stream = ReadDirStream::new(fs::read_dir(src).await?);
 		while let Some(entry) = stream.try_next().await? {
 			let ty = entry.file_type().await?;
 			if ty.is_file() {
