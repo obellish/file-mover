@@ -4,6 +4,7 @@ use std::{
 };
 
 use futures::{stream, Stream, StreamExt as _, TryStreamExt as _};
+use new::new;
 use tokio::fs::{self, DirEntry};
 use tokio_stream::wrappers::ReadDirStream;
 
@@ -11,8 +12,9 @@ async fn one_level<P>(path: P, to_visit: &mut Vec<PathBuf>) -> io::Result<Vec<Di
 where
 	P: AsRef<Path> + Send,
 {
-	let mut dir = ReadDirStream::new(fs::read_dir(path).await?);
-	let mut files = Vec::new();
+	let raw_dir = fs::read_dir(path).await?;
+	let mut dir = new!(ReadDirStream(raw_dir));
+	let mut files = new!(Vec<DirEntry>());
 
 	while let Some(child) = dir.try_next().await? {
 		if child.metadata().await?.is_dir() {

@@ -9,8 +9,10 @@ version.workspace = true
 
 [dependencies]
 anyhow = "1"
-clap = { version = "=4.5.3", features = ["derive"] }
+clap = { version = "4", features = ["derive"] }
 futures = "0.3"
+new = { git = "https://github.com/starlite-project/new.git", rev = "52a0d1816298973b05646c9bdb22f30e3d4b09a4" }
+paste = "1"
 tokio = { version = "1", features = [
     "fs",
     "macros",

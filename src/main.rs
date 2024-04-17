@@ -4,6 +4,7 @@ use anyhow::Result;
 use clap::Parser;
 use file_mover::{copy_dir_all, setup_tracing, Args};
 use futures::{stream::FuturesUnordered, TryStreamExt as _};
+use new::try_new;
 use tokio::{
 	runtime::Builder,
 	signal::windows::{ctrl_break, ctrl_c},
@@ -13,7 +14,7 @@ use tracing::{event, Level};
 static THREAD_ID: AtomicUsize = AtomicUsize::new(1);
 
 fn main() -> Result<()> {
-	let args = Args::try_parse()?;
+	let args = try_new!(Args: parse())?;
 
 	Builder::new_multi_thread()
 		.enable_all()
@@ -32,7 +33,7 @@ fn main() -> Result<()> {
 }
 
 async fn run(args: Args) -> Result<()> {
-	setup_tracing(&args).await?;
+	setup_tracing().await?;
 
 	match copy_dir_all::<FuturesUnordered<_>>(&args.input_folder, &args.output_folder, args.remove)
 		.await

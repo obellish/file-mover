@@ -17,9 +17,6 @@ pub struct Args {
 	/// The output folder to move to.
 	#[arg(short, long, value_name = "DIRECTORY")]
 	pub output_folder: PathBuf,
-	/// Folder for logging.
-	#[arg(long, value_name = "DIRECTORY")]
-	pub log_file: Option<PathBuf>,
 	/// Whether to remove files after copying.
 	#[arg(short, long)]
 	pub remove: bool,
