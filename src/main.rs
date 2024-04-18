@@ -13,8 +13,6 @@ use tracing::{event, Level};
 static THREAD_ID: AtomicUsize = AtomicUsize::new(1);
 
 fn main() -> Result<()> {
-	let args = Args::try_parse()?;
-
 	Builder::new_multi_thread()
 		.enable_all()
 		.thread_name_fn(|| {
@@ -26,13 +24,20 @@ fn main() -> Result<()> {
 			THREAD_ID.fetch_sub(1, SeqCst);
 		})
 		.build()?
-		.block_on(run(args))?;
+		.block_on(run())?;
 
 	Ok(())
 }
 
-async fn run(args: Args) -> Result<()> {
+async fn run() -> Result<()> {
 	setup_tracing().await?;
+	let args = match Args::try_parse() {
+		Ok(args) => args,
+		Err(e) => {
+			println!("{e}");
+			return Ok(());
+		}
+	};
 
 	match copy_dir_all::<FuturesUnordered<_>>(&args.input_folder, &args.output_folder, args.remove)
 		.await

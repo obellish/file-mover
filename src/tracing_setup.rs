@@ -3,7 +3,7 @@ use tracing::Subscriber;
 use tracing_subscriber::{
 	fmt::{
 		self,
-		format::{Format, Pretty},
+		format::{FmtSpan, Format, Pretty},
 	},
 	prelude::*,
 	EnvFilter, Layer,
@@ -30,5 +30,7 @@ where
 		.with_ansi(true)
 		.with_thread_ids(false)
 		.with_file(false)
+		.with_target(false)
+		.with_line_number(false)
 		.with_thread_names(true)
 }
