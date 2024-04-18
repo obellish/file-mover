@@ -3,7 +3,7 @@ use tracing::Subscriber;
 use tracing_subscriber::{
 	fmt::{
 		self,
-		format::{FmtSpan, Format, Pretty},
+		format::{Format, Pretty},
 	},
 	prelude::*,
 	EnvFilter, Layer,
